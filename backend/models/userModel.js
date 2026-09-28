@@ -20,6 +20,10 @@ const User = sequelize.define('Users' ,{
         type: DataTypes.STRING,
         allowNull: false, 
     },
+    images: {
+        type: DataTypes.JSONB,
+        defaultValue: []
+    }
 },{
     timestamps: false,
     hooks:{
