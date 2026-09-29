@@ -1,27 +1,24 @@
-const { Sequelize } = require('../config/database')
 const sharp = require('sharp')
 const path = require('path')
 const fs = require('fs/promises')
-const Upload = require('../models/uploadModel')
-
+const User = require('../models/userModel')
 
 exports.updateParkImage = async (req, res) => {
     try {
 
+        if(!req.user.id){
+            return res.status(401).json({message : 'not connected'})
+        }
+        
         const { id } = req.params
 
         if (!req.file) {
             return res.status(400).json({message: 'Image not found'})}
 
-        // On récupère le parc
-        const result = await Upload.selectAttraction(id)
+        const {description} = req.body
 
-        if (result.rowCount === 0) {
-            return res.status(404).json({message: 'Park not found'})
-        }
-
-        // const park = result.rows[0]
-
+        const changedUser = await User.findByPk(req.user.id)
+        
         // dossier upload
         const uploadFolder = path.join(
             process.cwd(),
@@ -36,13 +33,9 @@ exports.updateParkImage = async (req, res) => {
         // Noms des nouvelles images
         const safeId = id.replace(/[^a-zA-Z0-9-_]/g, '')
 
-        const timestamp = Date.now()
+        const filename = `${safeId}-card.webp`
 
-        const cardFilename = `${safeId}-${timestamp}-card.webp`
-        const backgroundFilename = `${safeId}-${timestamp}-background.webp`
-
-        const cardPath = path.join(uploadFolder, cardFilename)
-        const backgroundPath = path.join(uploadFolder, backgroundFilename)
+        const imagePath = path.join(uploadFolder, filename)
 
         // Création de l'image card
         await sharp(req.file.buffer)
@@ -55,52 +48,33 @@ exports.updateParkImage = async (req, res) => {
             .webp({
                 quality: 85
             })
-            .toFile(cardPath)
+            .toFile(imagePath)
 
-        // Création de l'image background
-        await sharp(req.file.buffer)
-            .rotate()
-            .resize({
-                width: 800,
-                height: 800,
-                fit: 'cover'
-            })
-            .webp({
-                quality: 80
-            })
-            .toFile(backgroundPath)
 
         // URL enregistrées en BDD
-        const cardImageUrl = `/upload/user/${cardFilename}`
+        const imageUrl = `/upload/user/${filename}`
 
-        // mise à jour BDD
-        const updatePark = await Upload.updateParkDb(cardImageUrl, backgroundImageUrl, id)
+        const newimage = {
+            url: imageUrl,
+            description: description
+        }
+        
+        let updatedimages = [...changedUser.images]
 
-        // 8. Suppression des anciennes images
-        const oldImages = [
-            user.images
-        ]
-
-        for (const oldImage of oldImages) {
-
-            if (!oldImage) continue
-
-            const oldImagePath = path.join(
-                process.cwd(),
-                oldImage.replace(/^\/+/, '')
-            )
-
-            try {
-                await fs.unlink(oldImagePath)
-            } catch (err) {
-
-                if (err.code !== 'ENOENT') {
-                    throw err
-                }
-            }
+        const exists = updatedimages.some(item => item.url === imageUrl);
+        if (exists) {
+            updatedimages = updatedimages.filter(item => item.url !== imageUrl);
+        } else {
+            updatedimages.push(newimage);
         }
 
-        return res.status(200).json({message: 'Park image updated', park: updatePark})
+        changedUser.images = updatedimages
+
+        changedUser.changed('images', true)
+
+        const updatedUser = await changedUser.save()
+
+        res.status(201).json(updatedUser)
 
     } catch (err) {
         console.error('ERREUR UPLOAD :', err)
@@ -108,3 +82,4 @@ exports.updateParkImage = async (req, res) => {
         return res.status(500).json({message: 'Error while modifying the image', error: err.message})
     }
 }
+
