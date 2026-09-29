@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = 3000
 const cors = require('cors')
+const path = require('path')
+
 require('dotenv').config()
 const { sequelize, connectDB } = require('./config/database')
 const startServer = async () => {
@@ -33,6 +35,7 @@ app.use(express.json())
 //     origin: 'http://localhost:3000'
 // }
 app.use(cors())
+app.use('/upload', express.static(path.join(process.cwd(), 'upload')))
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/user', userRoutes)
 // app.use('/api/v1/admin', adminRoutes)

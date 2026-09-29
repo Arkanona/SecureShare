@@ -5,7 +5,7 @@ const { updateUser } = require('../controllers/userController')
 const upload = require('../middlewares/uploadMiddleware')
 
 router.patch('/upload', authMiddleware, updateUser)
-router.patch('/:id/image', upload.single('image'), updateParkImage)
+router.patch('/:id/image', upload.single('image'), updateUser)
 
 
 

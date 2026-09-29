@@ -43,7 +43,7 @@ function Register () {
                 email: form.email,
                 password: form.password
             })
-            navigate('/connexion')
+            navigate('/login')
         } catch(error){
             console.error(error)
         } 
@@ -72,7 +72,7 @@ function Register () {
             </article>
             <div>
                 <p>Vous avez déjà un compte ?</p>
-                <Link to="/connexion">Connectez-vous</Link>
+                <Link to="/login">Connectez-vous</Link>
             </div>
         </div>
         </>
