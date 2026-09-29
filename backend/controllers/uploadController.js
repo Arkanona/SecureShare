@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs/promises')
 const User = require('../models/userModel')
 
-exports.updateParkImage = async (req, res) => {
+exports.updatedUser = async (req, res) => {
     try {
 
         if(!req.user.id){
@@ -41,12 +41,12 @@ exports.updateParkImage = async (req, res) => {
         await sharp(req.file.buffer)
             .rotate()
             .resize({
-                width: 600,
-                height: 400,
+                width: 800,
+                height: 800,
                 fit: 'cover'
             })
             .webp({
-                quality: 85
+                quality: 80
             })
             .toFile(imagePath)
 
