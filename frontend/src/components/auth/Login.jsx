@@ -80,7 +80,7 @@ function Login () {
             </article>
             <div>
                 <p>Pas de compte ?</p>
-                <Link to="/inscription">Inscrivez-vous !</Link>
+                <Link to="/register">Inscrivez-vous !</Link>
             </div>
         </div>
         </>

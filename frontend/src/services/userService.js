@@ -1,18 +1,26 @@
 const API_URL = import.meta.env.VITE_API_URL
 
-export const updateUserImage = async (userId, file) => {
-    const formData = new FormData()
+export const updateUserImage = async (userId, file, description) => {
+  if (!userId) {
+    throw new Error("userId manquant")
+  }
 
-    formData.append('image', file)
+  const formData = new FormData()
 
-    const response = await fetch(`${API_URL}/api/user/${userId}/image`,
-        {
-            method: 'PATCH',
-            body: formData
-        }
-    )
+  formData.append("image", file)
+  formData.append("description", description)
 
-    const data = await response.json()
+  const response = await fetch(
+    `${API_URL}/api/user/${userId}/image`,
+    {
+      method: "PATCH",
+      body: formData
+    }
+  )
 
-    return data
+  if (!response.ok) {
+    throw new Error(`Erreur HTTP ${response.status}`)
+  }
+
+  return await response.json()
 }
