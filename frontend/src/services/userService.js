@@ -27,3 +27,26 @@ export const updateUserImage = async (userId, file, description, token) => {
 
   return await response.json()
 }
+
+
+export const displayImage = async (userId, token) => {
+  if (!userId) {
+    throw new Error("userId manquant")
+  }
+
+  const response = await fetch(
+    `${API_URL}/api/v1/user/profile`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  )
+
+  if (!response.ok) {
+    throw new Error(`Erreur HTTP ${response.status}`)
+  }
+
+  return await response.json()
+}
