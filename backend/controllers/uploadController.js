@@ -19,6 +19,7 @@ exports.updatedUser = async (req, res) => {
 
         const changedUser = await User.findByPk(req.user.id)
         
+        const path = require('path')
         // dossier upload
         const uploadFolder = path.join(
             process.cwd(),
@@ -33,7 +34,23 @@ exports.updatedUser = async (req, res) => {
         // Noms des nouvelles images
         const safeId = id.replace(/[^a-zA-Z0-9-_]/g, '')
 
-        const filename = `${safeId}-card.webp`
+
+        // 1. On récupère le nom d'origine (ex: "Mon Image Spéciale.PNG")
+        const originalName = req.file.originalname
+
+        // 2. On sépare l'extension du nom de fichier
+        const nameWithoutExt = path.parse(originalName).name // ex: "Mon Image Spéciale"
+
+        // 3. On nettoie le nom : minuscules, suppression des accents et caractères spéciaux
+        const safeBaseName = nameWithoutExt
+            .normalize('NFD')                   // Sépare les accents des lettres
+            .replace(/[\u0300-\u036f]/g, '')    // Supprime les accents
+            .toLowerCase()                      // Convertit en minuscules
+            .replace(/[^a-z0-9-_]/g, '-')       // Remplace tout ce qui n'est pas alfanumérique par un tiret
+            .replace(/-+/g, '-')                // Évite les double-tirets "--"
+            .replace(/^-|-$/g, '')              // Nettoie les tirets au début/fin
+
+        const filename = `${safeId}-${safeBaseName}.webp`
 
         const imagePath = path.join(uploadFolder, filename)
 
