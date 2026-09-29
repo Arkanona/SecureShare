@@ -2,8 +2,6 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
-const { sequelize } = require('../config/database')
-const { QueryTypes } = require('sequelize')
 
 const JWT_SECRET = process.env.JWT_SECRET
 const JWT_EXPIRES_IN = '150d'
