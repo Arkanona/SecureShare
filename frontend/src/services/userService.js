@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL
 
-export const updateUserImage = async (userId, file, description) => {
+export const updateUserImage = async (userId, file, description, token) => {
   if (!userId) {
     throw new Error("userId manquant")
   }
@@ -11,9 +11,12 @@ export const updateUserImage = async (userId, file, description) => {
   formData.append("description", description)
 
   const response = await fetch(
-    `${API_URL}/api/user/${userId}/image`,
+    `${API_URL}/api/v1/user/${userId}/image`,
     {
       method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       body: formData
     }
   )

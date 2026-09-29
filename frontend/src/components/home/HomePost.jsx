@@ -1,13 +1,17 @@
 import { useState } from "react"
 import { updateUserImage } from "../../services/userService"
 import useAuthStore from "../../store/authStore"
+// import { useNavigate } from "react-router-dom"
 
 function HomePost() {
   const [image, setImage] = useState(null)
   const [description, setDescription] = useState("")
 
   const user = useAuthStore((state) => state.user)
+  const token = useAuthStore((state) => state.token)
   console.log("user :", user)
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -24,7 +28,8 @@ function HomePost() {
       const data = await updateUserImage(
         user.id,
         image,
-        description
+        description,
+        token
       )
 
       console.log(data)
