@@ -51,19 +51,54 @@ function Register () {
     return (
         <>
         <div className='items-center'>
-            <article className='registerArticle'>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="name">Prénom :</label>
-                    <input type="text" name='name' id='name' placeholder='Prénom' value={form.name} onChange={handleChange}/>
-                    <label htmlFor="email">E-mail :</label>
-                    <input type="email" name="email" id="email" placeholder="mail@exemple.com" value={form.email} onChange={handleChange}/>
+            <article className='mx-auto mt-20
+                max-w-[500px]
+                rounded-lg
+                bg-white
+                px-[25px] pt-[35px] pb-[45px]
+                text-center
+                shadow-[0_2px_20px_rgba(0,0,0,0.2)]'>
+                <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-[15px]'>
+                    <label className="text-left" htmlFor="name">Prénom :</label>
+                    <input className="
+                    rounded-[5px]
+                    border-0
+                    px-[10px] py-[9px]
+                    shadow-[0_2px_10px_rgba(0,0,0,0.2)]
+                    " type="text" name='name' id='name' placeholder='Prénom' value={form.name} onChange={handleChange}/>
+                    <label className="text-left" htmlFor="email">E-mail :</label>
+                    <input className="
+                    rounded-[5px]
+                    border-0
+                    px-[10px] py-[9px]
+                    shadow-[0_2px_10px_rgba(0,0,0,0.2)]
+                    " type="email" name="email" id="email" placeholder="mail@exemple.com" value={form.email} onChange={handleChange}/>
                     
-                    <label htmlFor="password">Mot de passe :</label>
-                        <input type="password" name="password" id="password" placeholder="Mot de passe" value={form.password} onChange={handleChange}/>
+                    <label className="text-left" htmlFor="password">Mot de passe :</label>
+                    <input className="
+                    rounded-[5px]
+                    border-0
+                    px-[10px] py-[9px]
+                    shadow-[0_2px_10px_rgba(0,0,0,0.2)]
+            " type="password" name="password" id="password" placeholder="Mot de passe" value={form.password} onChange={handleChange}/>
                     
-                    <label htmlFor="confirmPassword">Confirmez mot de passe :</label>
-                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirmez mot de passe" value={form.confirmPassword} onChange={handleChange}/>
-                <button type="submit">S'inscrire</button>
+                    <label className="text-left" htmlFor="confirmPassword">Confirmez mot de passe :</label>
+                        <input className="
+                    rounded-[5px]
+                    border-0
+                    px-[10px] py-[9px]
+                    shadow-[0_2px_10px_rgba(0,0,0,0.2)]
+                " type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirmez mot de passe" value={form.confirmPassword} onChange={handleChange}/>
+                <button type="submit" className='mt-[35px] mb-5
+    w-full
+    cursor-pointer
+    rounded-[5px]
+    border-0
+    bg-[#E63946]
+    p-[9px]
+    text-[15px]
+    font-semibold
+    text-white'>S'inscrire</button>
                 </form>
                 {passwordError && (
                     <p className='errorPass'>{passwordError}</p>
