@@ -26,7 +26,7 @@ exports.updateParkImage = async (req, res) => {
         const uploadFolder = path.join(
             process.cwd(),
             'upload',
-            'park'
+            'user'
         )
 
         await fs.mkdir(uploadFolder, {
@@ -61,26 +61,24 @@ exports.updateParkImage = async (req, res) => {
         await sharp(req.file.buffer)
             .rotate()
             .resize({
-                width: 1900,
-                height: 400,
+                width: 800,
+                height: 800,
                 fit: 'cover'
             })
             .webp({
-                quality: 85
+                quality: 80
             })
             .toFile(backgroundPath)
 
         // URL enregistrées en BDD
-        const cardImageUrl = `/upload/park/${cardFilename}`
-        const backgroundImageUrl = `/upload/park/${backgroundFilename}`
+        const cardImageUrl = `/upload/user/${cardFilename}`
 
         // mise à jour BDD
         const updatePark = await Upload.updateParkDb(cardImageUrl, backgroundImageUrl, id)
 
         // 8. Suppression des anciennes images
         const oldImages = [
-            park.img_park,
-            park.imgbg_park
+            user.images
         ]
 
         for (const oldImage of oldImages) {

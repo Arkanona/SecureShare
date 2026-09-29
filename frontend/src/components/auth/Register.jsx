@@ -50,7 +50,7 @@ function Register () {
     }
     return (
         <>
-        <div className='divRegister'>
+        <div className='items-center'>
             <article className='registerArticle'>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="name">Prénom :</label>
