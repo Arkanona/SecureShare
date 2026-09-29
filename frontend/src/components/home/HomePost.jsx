@@ -1,38 +1,38 @@
 import { useState } from "react"
 import { updateUserImage } from "../../services/userService"
 import useAuthStore from "../../store/authStore"
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function HomePost() {
-  const [image, setImage] = useState(null)
-  const [description, setDescription] = useState("")
+    const [image, setImage] = useState(null)
+    const [description, setDescription] = useState("")
 
-  const user = useAuthStore((state) => state.user)
-  const token = useAuthStore((state) => state.token)
-  console.log("user :", user)
-
+    const user = useAuthStore((state) => state.user)
+    const token = useAuthStore((state) => state.token)
 
 
-  const handleSubmit = async (e) => {
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!image) {
-      return
-    }
     if (!user) {
-    console.error("Aucun utilisateur connecté")
-    return
-  }
+        navigate("/login")
+        console.error("Aucun utilisateur connecté")
+        return
+    }
+    
+    if (!image) {
+        return
+    }
 
     try {
-      const data = await updateUserImage(
+      await updateUserImage(
         user.id,
         image,
         description,
         token
       )
-
-      console.log(data)
 
       setImage(null)
       setDescription("")
