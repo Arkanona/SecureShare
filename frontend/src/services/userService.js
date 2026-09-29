@@ -29,11 +29,12 @@ export const updateUserImage = async (userId, file, description, token) => {
 }
 
 
-export const displayImage = async (userId, token) => {
-  if (!userId) {
-    throw new Error("userId manquant")
-  }
+export const displayImage = async (token) => {
 
+    if (!token) {
+        throw new Error("Token manquant")
+    }
+    
   const response = await fetch(
     `${API_URL}/api/v1/user/profile`,
     {
