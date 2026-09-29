@@ -42,8 +42,8 @@ function HomePost() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <form className="grid gap-[15px] p-[15px] justify-self-center" onSubmit={handleSubmit}>
+      <input className="bg-black text-white w-fit rounded-[5px] p-[5px]"
         type="file"
         accept="image/*"
         onChange={(e) => setImage(e.target.files[0])}
@@ -57,13 +57,13 @@ function HomePost() {
         />
       )}
 
-      <textarea
+      <textarea className="bg-white text-black w-fit rounded-[5px] p-[5px] border-solid border-black"
         placeholder="Ajouter une description..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
 
-      <button type="submit">
+      <button className="bg-black text-white w-fit rounded-[5px] p-[5px]" type="submit">
         Envoyer l'image
       </button>
     </form>
