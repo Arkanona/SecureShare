@@ -63,9 +63,15 @@ function HomeImageUser() {
               />
 
               {image.description && (
-                <p className="p-3">
-                  {image.description}
-                </p>
+                // <p className="p-3">
+                //   {image.description}
+                // </p>
+                <div
+                  className="p-3"
+                  dangerouslySetInnerHTML={{
+                    __html: image.description
+                  }}
+                />
               )}
             </article>
           ))

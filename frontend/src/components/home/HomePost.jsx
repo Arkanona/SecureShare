@@ -9,7 +9,7 @@ function HomePost() {
 
     const user = useAuthStore((state) => state.user)
     const token = useAuthStore((state) => state.token)
-
+    const setUser = useAuthStore((state) => state.setUser)
 
     const navigate = useNavigate()
 
@@ -25,17 +25,16 @@ function HomePost() {
     if (!image) {
         return
     }
-    console.log("USER :", user)
-    console.log("USER ID :", user?.id)  
 
     try {
-      await updateUserImage(
+      const data = await updateUserImage(
         user.id,
         image,
         description,
         token
       )
 
+      setUser(data.user)
       setImage(null)
       setDescription("")
     } catch (error) {

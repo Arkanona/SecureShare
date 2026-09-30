@@ -1,16 +1,74 @@
-# React + Vite
+# SecureShare - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend React de SecureShare.
 
-Currently, two official plugins are available:
+## Technologies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React
+- React Router
+- Zustand
+- Tailwind CSS
+- Vite
 
-## React Compiler
+## Fonctionnalités
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- inscription et connexion ;
+- gestion de session avec JWT dans le `localStorage` ;
+- routes protégées ;
+- redirection vers `/login` puis retour vers `/publish` après connexion ;
+- formulaire de publication ;
+- aperçu d'image avant envoi ;
+- ajout d'une description ;
+- affichage des images publiées ;
+- gestion du loading et des erreurs.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+## Configuration
+
+Créer un fichier `.env` :
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+## XSS : démonstration et correction
+
+### Version vulnérable
+
+```jsx
+<div
+  dangerouslySetInnerHTML={{
+    __html: image.description
+  }}
+/>
+```
+
+### Version corrigée
+
+```jsx
+<p>{image.description}</p>
+```
+
+Le rendu JSX standard empêche le navigateur d'interpréter la description comme du HTML exécutable.
+
+## Test E2E
+
+Le test E2E couvre le parcours suivant :
+
+- accès à `/publish` sans connexion ;
+- redirection vers `/login` ;
+- saisie des identifiants ;
+- connexion ;
+- redirection finale vers `/publish`.
+
+Lancement :
+
+```bash
+node --test
+```

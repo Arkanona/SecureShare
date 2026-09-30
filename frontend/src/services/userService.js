@@ -25,7 +25,9 @@ export const updateUserImage = async (userId, file, description, token) => {
     throw new Error(`Erreur HTTP ${response.status}`)
   }
 
-  return await response.json()
+  const data = await response.json()
+
+  return data
 }
 
 

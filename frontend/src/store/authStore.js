@@ -11,6 +11,12 @@ const useAuthStore = create()(
             loading: false,
             error: null,
 
+            setUser: (user) => {
+                set({
+                    user: user
+                })
+            },
+
             register: async (userData) => {
                 try {
                     set({
