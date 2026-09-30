@@ -9,4 +9,5 @@ router.patch('/:id/image', authMiddleware, upload.single('image'), updatedUser)
 router.get('/profile', authMiddleware, displayImages)
 
 
+
 module.exports = router 

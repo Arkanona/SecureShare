@@ -30,11 +30,10 @@ export const updateUserImage = async (userId, file, description, token) => {
 
 
 export const displayImage = async (token) => {
+  if (!token) {
+    throw new Error("Token manquant")
+  }
 
-    if (!token) {
-        throw new Error("Token manquant")
-    }
-    
   const response = await fetch(
     `${API_URL}/api/v1/user/profile`,
     {
@@ -45,9 +44,15 @@ export const displayImage = async (token) => {
     }
   )
 
+  const data = await response.json()
+
   if (!response.ok) {
-    throw new Error(`Erreur HTTP ${response.status}`)
+    console.error("ERREUR BACKEND :", data)
+
+    throw new Error(
+      data.message || `Erreur HTTP ${response.status}`
+    )
   }
 
-  return await response.json()
+  return data
 }

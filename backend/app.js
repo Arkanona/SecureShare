@@ -29,6 +29,7 @@ const limiter = rateLimit({
     message: { status: 429, error: 'Trop de requete, réessayez plus tard'}
 })
 
+
 app.use(limiter)
 app.use(express.json())
 // const corsOption = {

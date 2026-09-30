@@ -21,7 +21,7 @@ function HomeImageUser() {
 
       try {
         const data = await displayImage(token)
-
+        console.log("IMAGES RECUES :", data)
         setImages(data|| [])
       } catch (error) {
         console.error(error)

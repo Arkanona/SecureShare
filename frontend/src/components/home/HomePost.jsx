@@ -25,6 +25,8 @@ function HomePost() {
     if (!image) {
         return
     }
+    console.log("USER :", user)
+    console.log("USER ID :", user?.id)  
 
     try {
       await updateUserImage(

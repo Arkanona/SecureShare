@@ -28,7 +28,7 @@ function Navbar () {
                 {user ? (
                     // Ce qui s'affiche si l'utilisateur est connecté
                     <>
-                    <Link className='linkLogout text-white' onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></Link>
+                    <button className='linkLogout text-white' onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></button>
                     </>
                 ) : (
                     // Ce qui s'affiche si l'utilisateur n'est pas connecté

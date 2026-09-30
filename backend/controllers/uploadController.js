@@ -19,7 +19,6 @@ exports.updatedUser = async (req, res) => {
 
         const changedUser = await User.findByPk(req.user.id)
         
-        const path = require('path')
         // dossier upload
         const uploadFolder = path.join(
             process.cwd(),
@@ -76,7 +75,7 @@ exports.updatedUser = async (req, res) => {
             description: description
         }
         
-        let updatedimages = [...changedUser.images]
+        let updatedimages = [...(changedUser.images || [])]
 
         const exists = updatedimages.some(item => item.url === imageUrl);
         if (exists) {
