@@ -7,6 +7,7 @@ const { sequelize } = require('../config/database')
 const { register, login } = require('../controllers/authController')
 const { displayImages } = require('../controllers/userController')
 const { updatedUser } = require('../controllers/uploadController')
+const sharp = require('sharp')
 
 const createMockRes = () => {
     const res = {
@@ -78,17 +79,34 @@ describe('Auth test unit', () => {
 
     test('upload image', async () => {
         const dbUser = await User.findOne({ where: { email: 'test_us_a@example.com' } })
-        
+        const imageBuffer = await sharp({
+            create: {
+                width: 100,
+                height: 100,
+                channels: 3,
+                background: {
+                    r: 255,
+                    g: 0,
+                    b: 0
+                }
+            }
+        })
+        .jpeg()
+        .toBuffer()
+
         const req = {
             user: { id: dbUser.id },
+            params: {
+                id: String(dbUser.id)
+            },
             body: {
                 description: 'test'
             },
             file: {
                 img: '1712345678-test.jpg',
-                path: 'uploads/1712345678-test.jpg',
+                buffer: imageBuffer,
                 mimetype: 'image/jpeg'
-            }
+            },
         }
         const res = createMockRes()
         
