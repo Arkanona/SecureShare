@@ -103,7 +103,7 @@ describe('Auth test unit', () => {
                 description: 'test'
             },
             file: {
-                img: '1712345678-test.jpg',
+                originalname: '1712345678-test.jpg',
                 buffer: imageBuffer,
                 mimetype: 'image/jpeg'
             },
