@@ -22,7 +22,9 @@ function Navbar () {
             <nav className='flex'>
                 <ul className="flex gap-[10px]">
                     <li><Link className='text-white' to='/'>Accueil</Link></li>
+                    <li><Link className='text-white' to='/publish'>Publier</Link></li>
                 </ul>
+
             </nav>
             <div className="flex gap-[10px] items-center">
                 {user ? (
