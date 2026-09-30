@@ -1,7 +1,6 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HomeImage from "../components/home/HomeImage";
-import HomePost from "../components/home/HomePost";
 import HomeImageUser from "../components/home/HomeImageUser";
 
 
@@ -13,7 +12,6 @@ function Home() {
         <Navbar />
         <HomeImage/>
         <HomeImageUser/>
-        <HomePost/>
         <Footer/>
         </>
     )
